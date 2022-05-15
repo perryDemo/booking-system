@@ -14,6 +14,8 @@ import com.agoda.clone.agoda.model.Restaurant;
 
 import com.agoda.clone.agoda.repository.PropertyRepository;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ public class PropertyServiceImpl implements PropertyService{
     private PropertyMapper propertyMapper;
 
     @Override
-    public void save(PropertyRequest propertyRequest){
+    public ResponseEntity<String> save(PropertyRequest propertyRequest){
 
         Property property = propertyMapper.map(propertyRequest);
         if(propertyRequest.getRestaurant() != null){
@@ -53,6 +55,7 @@ public class PropertyServiceImpl implements PropertyService{
         property.setPropertyDetail(propertyDetail);
         property.setPolicy(policy);
         propertyRepository.save(property);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override

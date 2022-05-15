@@ -5,8 +5,10 @@ import java.util.List;
 import com.agoda.clone.agoda.dto.PropertyRequest;
 import com.agoda.clone.agoda.dto.PropertyResponse;
 
+import org.springframework.http.ResponseEntity;
+
 public interface PropertyService {
 
-    void save(PropertyRequest propertyRequest);
+    ResponseEntity<String> save(PropertyRequest propertyRequest);
     List<PropertyResponse> fetchAll();
 }

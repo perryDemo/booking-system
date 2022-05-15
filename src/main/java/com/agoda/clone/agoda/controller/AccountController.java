@@ -4,6 +4,7 @@ import com.agoda.clone.agoda.dto.AuthenticationResponse;
 import com.agoda.clone.agoda.dto.LoginRequest;
 import com.agoda.clone.agoda.dto.RefreshTokenRequest;
 import com.agoda.clone.agoda.dto.RegisterRequest;
+import com.agoda.clone.agoda.dto.UserResponse;
 import com.agoda.clone.agoda.service.AccountService;
 import com.agoda.clone.agoda.service.RefreshTokenService;
 
@@ -39,13 +40,13 @@ public class AccountController {
         return accountService.login(loginRequset);
     }
 
-    @GetMapping("accountVerification/{token}")
+    @GetMapping("/accountVerification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token) {
         accountService.verifyAccount(token);
         return new ResponseEntity<>("Account Activated Successully", HttpStatus.OK);
     }
 
-    @PostMapping("refresh/token")
+    @PostMapping("/refresh/token")
     public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         return accountService.refreshToken(refreshTokenRequest);
     }
@@ -54,5 +55,10 @@ public class AccountController {
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.status(HttpStatus.OK).body("Refresh Token Deleted Successfully!!");
+    }
+
+    @PostMapping("/userProfile")
+    public UserResponse getUserProfile(@Valid @RequestBody LoginRequest loginRequest){
+        return accountService.getUserDetail(loginRequest);
     }
 }

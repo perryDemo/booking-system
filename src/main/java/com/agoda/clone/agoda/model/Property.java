@@ -78,4 +78,8 @@ public class Property {
     @JsonManagedReference
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "property")
     private List<Breakfast> breakfast;
+
+    @JsonManagedReference
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "property")
+    private List<Room> room;
 }

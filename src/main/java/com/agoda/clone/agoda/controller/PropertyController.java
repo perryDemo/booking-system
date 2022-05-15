@@ -11,24 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/property")
 @AllArgsConstructor
 public class PropertyController {
     
     private PropertyService propertyService;
 
-    @PostMapping("property")
-    public void saveProperty(@RequestBody PropertyRequest property) {
-        propertyService.save(property);
+    @PostMapping("/saveProperty")
+    public ResponseEntity<String> saveProperty(@RequestBody PropertyRequest property) {
+        return propertyService.save(property);
     }
     
-    @GetMapping("property")
+    @GetMapping("/getProperties")
     public List<PropertyResponse> fetchAll (){
         return propertyService.fetchAll();
     }

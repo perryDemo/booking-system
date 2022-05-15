@@ -1,37 +1,35 @@
 package com.agoda.clone.agoda.model;
 
 import java.time.Instant;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class User {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String lastname;
-    private String firstname;
-    private String email;
-    private String password;
-    private boolean verification;
+    private int ID;
+    private boolean paynow;
+    private int quantity;
+    private String contact;
     private String Createdby;
     private Instant Createdat;
     private String Modifiedby;
@@ -39,7 +37,15 @@ public class User {
     private String Deletedby;
     private Instant Deletedat;
 
-    @JsonManagedReference
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Booking> bookings;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid")
+    @ToString.Exclude
+    private User user;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offerid")
+    @ToString.Exclude
+    private Offer offer;
 }

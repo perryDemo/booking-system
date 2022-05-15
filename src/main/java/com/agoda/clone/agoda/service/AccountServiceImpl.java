@@ -9,6 +9,8 @@ import com.agoda.clone.agoda.dto.AuthenticationResponse;
 import com.agoda.clone.agoda.dto.LoginRequest;
 import com.agoda.clone.agoda.dto.RefreshTokenRequest;
 import com.agoda.clone.agoda.dto.RegisterRequest;
+import com.agoda.clone.agoda.dto.UserResponse;
+import com.agoda.clone.agoda.mapper.UserMapper;
 import com.agoda.clone.agoda.model.User;
 import com.agoda.clone.agoda.model.VerificationToken;
 import com.agoda.clone.agoda.repository.UserRepository;
@@ -21,6 +23,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +41,7 @@ public class AccountServiceImpl implements AccountService{
     private AuthenticationManager authenticationManager;
     private JWTProvider jwtProvider;
     private RefreshTokenService refreshTokenService;
+    private UserMapper userMapper;
 
     @Override
     public ResponseEntity<String> signup(RegisterRequest registerRequest) {
@@ -82,7 +86,6 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void verifyAccount(String token) {
         Optional<VerificationToken> verificationTokenOptional = verificationTokenRepository.findByToken(token);
-        System.out.println(verificationTokenOptional);
         verificationTokenOptional.orElseThrow();
         fetchUserAndEnable(verificationTokenOptional.get());
     }
@@ -118,5 +121,24 @@ public class AccountServiceImpl implements AccountService{
                 .refreshToken(refreshTokenRequest.getRefreshToken())
                 .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
                 .username(refreshTokenRequest.getUsername()).build();
-    }           
+    }
+
+    @Override
+    public User getCurrentUser() {
+
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepository.findByEmail(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+    }
+
+    @Override
+    public UserResponse getUserDetail(LoginRequest loginRequest) {
+        // TODO Auto-generated method stub
+        AuthenticationResponse authenticationResponse = login(loginRequest);
+
+        return userMapper.mapToUserResponse(getCurrentUser(), authenticationResponse);
+    }
+
+     
 }
