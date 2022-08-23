@@ -31,35 +31,35 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private String Name;
-    private String Type;
-    private String Description;
-    private String Cancellation;
-    @Column(name="distancefromcity")
-    private String DistanceFromCity;
-    @Column(name="distancefromairport")
-    private String DistanceFromAirport;
+    private String name;
+    private String type;
+    private String description;
+    @Column(name="shortdescription")
+    private String shortDescription;
+    private double lat;
+    private double lng;
     @Column(name="checkinstart")
-    private String CheckInStart;
+    private String checkInStart;
     @Column(name="checkinend")
-    private String CheckInEnd;
+    private String checkInEnd;
     @Column(name="checkout")
-    private String CheckOut;
-    private String Announcements;
-    private String Star;
-    private String Address;
+    private String checkOut;
+    private String announcements;
+    private String star;
     @Column(name="buildingfloorunit")
-    private String BuildingFloorUnit;
-    private String Country;
-    private String State;
-    private String City;
-    private String Zip;
-    private String Createdby;
-    private Instant Createdat;
-    private String Modifiedby;
-    private Instant Modifiedat;
-    private String Deletedby;
-    private Instant Deletedat;
+    private String buildingFloorUnit;
+    private String address;
+    private String country;
+    private String state;
+    private String city;
+    private String area;
+    private String zip;
+    private String createdby;
+    private Instant createdat;
+    private String modifiedby;
+    private Instant modifiedat;
+    private String deletedby;
+    private Instant deletedat;
 
     @JsonManagedReference
     @PrimaryKeyJoinColumn

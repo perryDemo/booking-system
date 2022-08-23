@@ -36,7 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         httpSecurity.cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/api/account/refresh/token","/api/property/saveProperty","/api/booking/makeBooking").authenticated()
+                        .antMatchers("/api/account/profile",
+                            "/api/property/saveProperty",
+                            "/api/booking/makeBooking",
+                            "/api/booking/mybooking",
+                            "/api/paypal/**").authenticated()
                         .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling();

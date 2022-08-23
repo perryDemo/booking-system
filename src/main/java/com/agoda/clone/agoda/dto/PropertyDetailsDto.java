@@ -2,12 +2,12 @@ package com.agoda.clone.agoda.dto;
 
 import java.util.List;
 
+
 import com.agoda.clone.agoda.model.Breakfast;
 import com.agoda.clone.agoda.model.Policy;
 import com.agoda.clone.agoda.model.PropertyDetail;
 import com.agoda.clone.agoda.model.Restaurant;
 import com.agoda.clone.agoda.model.Room;
-import com.agoda.clone.agoda.model.Offer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PropertyResponse {
+public class PropertyDetailsDto {
     private int id;
     private String Name;
     private String Type;
@@ -46,8 +46,6 @@ public class PropertyResponse {
     private List<Breakfast> breakfast; 
 
     private List<Room> room;
-
-    private List<Offer> Offer;
 
     private long totalReview;
     private List<ReviewDto> reviews;

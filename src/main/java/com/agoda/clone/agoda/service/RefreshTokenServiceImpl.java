@@ -7,11 +7,13 @@ import com.agoda.clone.agoda.model.RefreshToken;
 import com.agoda.clone.agoda.repository.RefreshTokenRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class RefreshTokenServiceImpl implements RefreshTokenService{
     
     private RefreshTokenRepository refreshTokenRepository;

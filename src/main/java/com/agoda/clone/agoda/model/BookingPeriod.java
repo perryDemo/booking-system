@@ -2,19 +2,17 @@ package com.agoda.clone.agoda.model;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,37 +28,23 @@ import lombok.ToString;
 @Builder
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Offer {
+@Table(name="bookingperiod")
+public class BookingPeriod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
-    private int guest;
-    private int kid;
-    private int kidage;
-    private int quantity;
-    private int canceldeadline;
-    private Date checkindate;
-    private Date checkoutdate;
-    private double price;
+    private int id;
+    private Date checkin;
     private String Createdby;
     private Instant Createdat;
     private String Modifiedby;
     private Instant Modifiedat;
     private String Deletedby;
     private Instant Deletedat;
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roomid")
+    /* 
+    @JsonManagedReference
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookingid")
+    @MapsId
     @ToString.Exclude
-    private Room room;
-
-
-    @JsonManagedReference
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "offer")
-    private List<Booking> bookings;
-
-    @JsonManagedReference
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "offer")
-    private List<Benefit> benefit;
+    private Booking booking;*/
 }

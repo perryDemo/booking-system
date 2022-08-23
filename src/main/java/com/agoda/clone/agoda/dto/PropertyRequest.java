@@ -15,9 +15,10 @@ public class PropertyRequest {
     private String Name;
     private String Type;
     private String Description;
-    private String Cancellation;
-    private String DistanceFromCity;
-    private String DistanceFromAirport;
+    private String ShortDescription;
+    private double lat;
+    private double lng;
+    private String area;
     private String CheckInStart;
     private String CheckInEnd;
     private String CheckOut;

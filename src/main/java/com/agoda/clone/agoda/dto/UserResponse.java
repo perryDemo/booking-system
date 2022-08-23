@@ -15,5 +15,7 @@ public class UserResponse {
     private String lastName;
     private boolean verification;
     private Instant createDate;
+    private String phone;
+    private String countrycode;
     private AuthenticationResponse authenticationResponse;
 }

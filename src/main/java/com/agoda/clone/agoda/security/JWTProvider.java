@@ -10,30 +10,29 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import static java.util.Date.from;
 @Service
 public class JWTProvider {
 
-    @Value("${jwt.expiration.time}")
-    private Long jwtExpirationInMillis;
+    @Value("${jwt.access.expiration.time}")
+    private Long jwtAccessExpirationInMillis;
+    @Value("${jwt.refresh.expiration.time}")
+    private Long jwtRefreshEExpirationInMillis;
     
-    public String generateToken(Authentication authentication){
-        org.springframework.security.core.userdetails.User principal = (User) authentication.getPrincipal();
+    public String generateToken(int id){
         return JWT.create()
-            .withSubject(principal.getUsername())
-            .withExpiresAt(new Date(System.currentTimeMillis()+jwtExpirationInMillis))
+            .withSubject(""+id)
+            .withExpiresAt(new Date(System.currentTimeMillis()+jwtAccessExpirationInMillis))
             .withIssuedAt(from(Instant.now()))
             .withIssuer("agoda")
             .sign(Algorithm.HMAC256("secret".getBytes()));
     }
 
-    public String generateTokenWithUserName(String username){
+    public String generateRefreshToken(String token){
         return JWT.create()
-            .withSubject(username)
-            .withExpiresAt(new Date(System.currentTimeMillis()+jwtExpirationInMillis))
+            .withSubject(token)
+            .withExpiresAt(new Date(System.currentTimeMillis()+jwtRefreshEExpirationInMillis))
             .withIssuedAt(from(Instant.now()))
             .withIssuer("agoda")
             .sign(Algorithm.HMAC256("secret".getBytes()));
@@ -53,12 +52,16 @@ public class JWTProvider {
         return false;
     }
 
-    public String getUsernameFromJWT (String token){
+    public String getSubjectFromJWT (String token){
         DecodedJWT decodedJWT = JWT.decode(token);
         return decodedJWT.getSubject();
     }
 
-    public Long getJwtExpirationInMillis(){
-        return jwtExpirationInMillis;
+    public Long getJwtAccessExpirationInMillis(){
+        return jwtAccessExpirationInMillis;
+    }
+
+    public Long getJwtRefreshEExpirationInMillis(){
+        return jwtRefreshEExpirationInMillis;
     }
 }

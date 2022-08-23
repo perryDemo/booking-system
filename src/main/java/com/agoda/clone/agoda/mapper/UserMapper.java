@@ -1,6 +1,5 @@
 package com.agoda.clone.agoda.mapper;
 
-import com.agoda.clone.agoda.dto.AuthenticationResponse;
 import com.agoda.clone.agoda.dto.UserResponse;
 import com.agoda.clone.agoda.model.User;
 
@@ -15,6 +14,7 @@ public interface UserMapper {
     @Mapping(target = "lastName", source = "user.lastname")
     @Mapping(target = "verification", source = "user.verification")
     @Mapping(target = "createDate", source = "user.createdat")
-    @Mapping(target = "authenticationResponse", source = "authenticationResponse")
-    UserResponse mapToUserResponse(User user, AuthenticationResponse authenticationResponse);
+    @Mapping(target = "phone", source = "user.phone")
+    @Mapping(target = "countrycode", source = "user.countrycode")
+    UserResponse mapToUserResponse(User user);
 }
